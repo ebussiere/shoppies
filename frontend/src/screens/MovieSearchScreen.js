@@ -3,18 +3,17 @@ import MovieCard from '../components/MovieCard.js';
 import { useSelector} from "react-redux";
 import MovieSearch from '../components/MovieSearch.js';
 import { Col, Row } from 'react-bootstrap';
-import LoginButton from '../components/LoginButton.js';
-import LogoutButton from '../components/LogoutButton.js';
-import Profile from '../components/Profile.js';
+
+import { useAuth0 } from "@auth0/auth0-react";
 
 const MovieSearchScreen = (props) => {
+  
   const movieList = useSelector(state => state.movieList)
   const { loading, error, movies, term } = movieList;
   return (
     <div>
-      {/* <LoginButton />
-      <LogoutButton />
-      <Profile/> */}
+       
+     <>
       <MovieSearch />
       <Row>
         <Col style={{
@@ -33,7 +32,7 @@ const MovieSearchScreen = (props) => {
             ></MovieCard>
           )) : <h1>No movies found</h1>}
         </Col>
-      </Row>
+      </Row></>
     </div>
   );
 };

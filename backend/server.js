@@ -1,23 +1,25 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import productRoutes from './routes/productRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import connectDB from './config/db.js';
-import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-const app = express();
-app.use(express.json());
-dotenv.config();
+// load .env data into process.env
+require('dotenv').config();
+// Web server config
+const express = require('express');
+const App = express();
+exports.app = App;
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const bodyParser = require("body-parser");
+const cors = require('cors');
 
-connectDB();
+const { apiRoutes } = require("./routes/apiRoutes");
+const db = require('./lib/db-conn');
+// Express Configuration
+App.use(bodyParser.urlencoded({ extended: false }));
+App.use(bodyParser.json());
+App.use(express.static('public'));
+App.use(cors());
+apiRoutes(db);
 
-app.get('/', (req, res) => {
-  res.send('API is running');
+
+App.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`Express seems to be listening on port ${PORT} so that's pretty good 👍`);
 });
-
-app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes);
-app.use(notFound);
-app.use(errorHandler);
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));

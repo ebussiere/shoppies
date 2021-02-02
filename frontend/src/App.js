@@ -4,7 +4,9 @@ import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import MovieSearchScreen from './screens/MovieSearchScreen.js';
 import MovieDetailsScreen from './screens/MovieDetailsScreen.js';
+import RegisterScreen from './screens/RegisterScreen.js';
 import SharedMovies from './screens/SharedMovies.js';
+
 import './App.css';
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
           <Route path='/:term?' component={MovieSearchScreen} exact/>
           <Route path='/details/:imdbID' component={MovieDetailsScreen}/>
           <Route path='/shared/' component={SharedMovies} />
+          <Route path='/register/' component={RegisterScreen} />
+          
         </Container>
       </main>
     </Router>
